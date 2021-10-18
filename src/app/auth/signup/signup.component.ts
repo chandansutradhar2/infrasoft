@@ -34,8 +34,7 @@ export class SignupComponent {
     return this.timer;
   }
 
-  signup(event: any) {
-    console.log(event);
-    alert('signup clicked');
+  signup(email: any, pass: any, name: any) {
+    console.log(email, name);
   }
 }
