@@ -8,7 +8,7 @@ import { LOGIN_TYPE } from './models/user.model';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  loginType = LOGIN_TYPE.admin;
+  loginType = LOGIN_TYPE.user;
 
   adminNavCategories: NavMenu[] = [
     { url: '', name: 'Dashboard', icon: '' },
