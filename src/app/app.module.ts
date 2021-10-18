@@ -7,8 +7,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AuthModule } from '../app/auth/auth.module';
 import { SellerModule } from '../app/seller/seller.module';
+import { DemoComponent } from './demo/demo.component';
+import { AvatarComponent } from './avatar/avatar.component';
 @NgModule({
-  declarations: [AppComponent, NavBarComponent],
+  declarations: [AppComponent, NavBarComponent, DemoComponent, AvatarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
