@@ -33,4 +33,9 @@ export class SignupComponent {
   printTimeLeft(): string {
     return this.timer;
   }
+
+  signup(event: any) {
+    console.log(event);
+    alert('signup clicked');
+  }
 }
