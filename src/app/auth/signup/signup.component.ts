@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LOGIN_TYPE } from 'src/app/models/user.model';
 
 //decorator -metadata
@@ -13,6 +14,14 @@ import { LOGIN_TYPE } from 'src/app/models/user.model';
   // ],
 })
 export class SignupComponent {
+  email: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+  // password: FormControl;
+  // fullName: FormControl;
+  // address: FormControl;
+
   @Input() userType: string = LOGIN_TYPE.user;
   maxTime: number = 10;
   timer: string = `you have ${this.maxTime} minutes`;
@@ -20,6 +29,9 @@ export class SignupComponent {
   constructor() {
     this.currentTime = new Date();
     this.remainingTime();
+    this.email.valueChanges.subscribe((res) => {
+      console.log(res);
+    });
   }
 
   remainingTime() {
@@ -34,5 +46,7 @@ export class SignupComponent {
     return this.timer;
   }
 
-  signup() {}
+  signup() {
+    console.log(this.email.value);
+  }
 }
