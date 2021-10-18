@@ -2,9 +2,13 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'cn-signup',
-  template: `<p>signup works!</p>
-    <div></div>`,
-  styleUrls: ['./signup.component.scss'],
+  templateUrl: './signup.component.html',
+  // styleUrls: ['./signup.component.scss'],
+  styles: [
+    `
+      background-color: red;
+    `,
+  ],
 })
 export class SignupComponent {
   constructor() {
