@@ -34,7 +34,5 @@ export class SignupComponent {
     return this.timer;
   }
 
-  signup(email: any, pass: any, name: any) {
-    console.log(email, name);
-  }
+  signup() {}
 }
