@@ -15,7 +15,7 @@ import { LOGIN_TYPE, User } from 'src/app/models/user.model';
 })
 export class SignupComponent {
   formGrp: FormGroup;
-
+  strength!: string;
   fullName: string = 'Chandan';
   @Input() userType: string = LOGIN_TYPE.user;
   maxTime: number = 10;
@@ -36,12 +36,30 @@ export class SignupComponent {
       ]),
       fullName: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z]+$/),
+        Validators.pattern(/^[A-Za-z\s]+$/),
       ]),
     });
 
     this.currentTime = new Date();
     this.remainingTime();
+
+    this.formGrp.controls['password'].valueChanges.subscribe(
+      (value: string) => {
+        if (value.length < 6) {
+          this.strength = 'Weak';
+        } else if (value.length >= 6 && value.length < 10) {
+          this.strength = 'Average';
+        } else if (value.length >= 10) {
+          this.strength = 'Strong';
+        } else {
+          this.strength = 'Weak';
+        }
+      }
+    );
+  }
+
+  public get form() {
+    return this.formGrp.controls;
   }
 
   remainingTime() {
