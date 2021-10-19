@@ -24,7 +24,8 @@
         </div>
         <div class="mb-3">
             <label for="fullName" class="form-label">Full Name</label>
-            <input [value]="fullName" type="text" class="form-control" id="fullName" placeholder="Full Name">
+            <input [(ngModel)]="fullName" [ngModelOptions]="{standalone: true}" type="text" class="form-control"
+                id="fullName" placeholder="Full Name">
         </div>
         <div class="mb-3">
             <label for="address" class="form-label">Address</label>
