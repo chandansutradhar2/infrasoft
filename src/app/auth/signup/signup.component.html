@@ -5,35 +5,50 @@
 <div class="container">
     <h3>Hello {{userType}}, Create an Account</h3>
 
-    <form>
+    <form [formGroup]="formGrp">
         <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input type="email" class="form-control" [formControl]="email" id="email" placeholder="name@example.com">
-            <div *ngIf="email.hasError('email')" id="emailvalidation" style="display: inline !important;"
-                class="invalid-feedback">
+            <input type="email" class="form-control" formControlName="email" id="email" placeholder="name@example.com">
+            <div *ngIf="formGrp.controls['email'].hasError('email')" id="emailvalidation"
+                style="display: inline !important;" class="invalid-feedback">
                 Please enter a valid email.
             </div>
-            <div *ngIf="email.hasError('required') && email.dirty==true" id="emailvalidation"
-                style="display: inline !important;" class="invalid-feedback">
+            <div *ngIf="formGrp.controls['email'].hasError('required') && formGrp.controls['email'].dirty==true"
+                id="emailvalidation" style="display: inline !important;" class="invalid-feedback">
                 Email cannot be left blank.
             </div>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password">
+            <input type="password" class="form-control" formControlName="password" id="password">
+            <div *ngIf="formGrp.controls['password'].hasError('required')" id="emailvalidation"
+                style="display: inline !important;" class="invalid-feedback">
+                Password caannot be left blank.
+            </div>
+            <div *ngIf="formGrp.controls['password'].hasError('minlength') && formGrp.controls['password'].dirty==true"
+                id="emailvalidation" style="display: inline !important;" class="invalid-feedback">
+                Email cannot be left blank.
+            </div>
         </div>
         <div class="mb-3">
             <label for="fullName" class="form-label">Full Name</label>
-            <input [(ngModel)]="fullName" [ngModelOptions]="{standalone: true}" type="text" class="form-control"
-                id="fullName" placeholder="Full Name">
+            <input type="text" class="form-control" id="fullName" placeholder="Full Name" formControlName="fullName">
+            <div *ngIf="formGrp.controls['fullName'].hasError('required')" id="emailvalidation"
+                style="display: inline !important;" class="invalid-feedback">
+                Full Name is required.
+            </div>
+            <div *ngIf="formGrp.controls['fullName'].hasError('pattern') && formGrp.controls['fullName'].dirty==true"
+                id="emailvalidation" style="display: inline !important;" class="invalid-feedback">
+                Full Name cannot contains numbers.
+            </div>
         </div>
         <div class="mb-3">
             <label for="address" class="form-label">Address</label>
-            <textarea class="form-control" id="address" rows="3"></textarea>
+            <textarea class="form-control" id="address" rows="3" formControlName="address"></textarea>
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">MobileNo</label>
-            <input type="number" class="form-control" placeholder="10 digit mobile no">
+            <input type="number" class="form-control" placeholder="10 digit mobile no" formControlName="mobileNo">
         </div>
     </form>
     <div class="d-grid gap-2">

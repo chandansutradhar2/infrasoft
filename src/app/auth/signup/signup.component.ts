@@ -14,22 +14,34 @@ import { LOGIN_TYPE, User } from 'src/app/models/user.model';
   // ],
 })
 export class SignupComponent {
-  email: FormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
-  // password: FormControl;
-  // fullName: FormControl;
-  // address: FormControl;
+  formGrp: FormGroup;
+
   fullName: string = 'Chandan';
   @Input() userType: string = LOGIN_TYPE.user;
   maxTime: number = 10;
   timer: string = `you have ${this.maxTime} minutes`;
   currentTime!: Date;
   constructor() {
+    this.formGrp = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
+      address: new FormControl('', [Validators.minLength(20)]),
+      mobileNo: new FormControl('', [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(10),
+      ]),
+      fullName: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z]+$/),
+      ]),
+    });
+
     this.currentTime = new Date();
     this.remainingTime();
-    this.email.valueChanges.subscribe((res) => {});
   }
 
   remainingTime() {
@@ -45,10 +57,10 @@ export class SignupComponent {
   }
 
   signup() {
-    console.log(this.fullName);
+    console.log(this.formGrp.value);
     // let user: User = {
     //   email: this.email.value,
-
+    //   address:this.formGrp.controls['address'].value
     // }
   }
 }
