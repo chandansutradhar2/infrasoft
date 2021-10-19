@@ -48,7 +48,19 @@
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">MobileNo</label>
-            <input type="number" class="form-control" placeholder="10 digit mobile no" formControlName="mobileNo">
+            <input type="tel" class="form-control" placeholder="10 digit mobile no" formControlName="mobileNo">
+            <div *ngIf="formGrp.controls['mobileNo'].hasError('required')" id="emailvalidation"
+                style="display: inline !important;" class="invalid-feedback">
+                Mobile is required.
+            </div>
+            <div *ngIf="formGrp.controls['mobileNo'].hasError('minlength') && formGrp.controls['mobileNo'].dirty==true"
+                id="emailvalidation" style="display: inline !important;" class="invalid-feedback">
+                Mobile No must be 10 digit only
+            </div>
+            <div *ngIf="formGrp.controls['mobileNo'].hasError('maxlength') && formGrp.controls['mobileNo'].dirty==true"
+                id="emailvalidation" style="display: inline !important;" class="invalid-feedback">
+                Mobile No cannot be more than 10 digit only
+            </div>
         </div>
     </form>
     <div class="d-grid gap-2">
