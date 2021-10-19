@@ -23,16 +23,15 @@
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" formControlName="password" id="password">
-
-            <span [ngSwitch]="strength">
-                <div *ngSwitchCase="'Weak'" style="color: rgb(209, 60, 60);">
-                    {{strength}} Password
+            <span [ngSwitch]="form.password.value.length">
+                <div *ngSwitchCase="4" style="color: rgb(209, 60, 60);">
+                    Weak Password
                 </div>
-                <div *ngSwitchCase="'Average'" style="color: rgb(236, 201, 86);">
-                    {{strength}} Password
+                <div *ngSwitchCase="7" style="color: rgb(236, 201, 86);">
+                    Average Password
                 </div>
-                <div *ngSwitchCase="'Strong'" style="color: rgb(97, 240, 84);">
-                    {{strength}} Password
+                <div *ngSwitchCase="10" style="color: rgb(97, 240, 84);">
+                    Strong Password
                 </div>
                 <div *ngSwitchDefault>
 

@@ -43,19 +43,19 @@ export class SignupComponent {
     this.currentTime = new Date();
     this.remainingTime();
 
-    this.formGrp.controls['password'].valueChanges.subscribe(
-      (value: string) => {
-        if (value.length < 6) {
-          this.strength = 'Weak';
-        } else if (value.length >= 6 && value.length < 10) {
-          this.strength = 'Average';
-        } else if (value.length >= 10) {
-          this.strength = 'Strong';
-        } else {
-          this.strength = 'Weak';
-        }
-      }
-    );
+    // this.formGrp.controls['password'].valueChanges.subscribe(
+    //   (value: string) => {
+    //     if (value.length < 6) {
+    //       this.strength = 'Weak';
+    //     } else if (value.length >= 6 && value.length < 10) {
+    //       this.strength = 'Average';
+    //     } else if (value.length >= 10) {
+    //       this.strength = 'Strong';
+    //     } else {
+    //       this.strength = 'Weak';
+    //     }
+    //   }
+    // );
   }
 
   public get form() {
