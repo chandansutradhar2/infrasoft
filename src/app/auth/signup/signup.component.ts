@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { LOGIN_TYPE } from 'src/app/models/user.model';
+import { LOGIN_TYPE, User } from 'src/app/models/user.model';
 
 //decorator -metadata
 @Component({
@@ -9,7 +9,7 @@ import { LOGIN_TYPE } from 'src/app/models/user.model';
   styleUrls: ['./signup.component.scss'],
   // styles: [
   //   `
-  //     background-color: red;
+  //     background-color: red;exit
   //   `,
   // ],
 })
@@ -21,7 +21,7 @@ export class SignupComponent {
   // password: FormControl;
   // fullName: FormControl;
   // address: FormControl;
-
+  fullName: string = 'Chandan';
   @Input() userType: string = LOGIN_TYPE.user;
   maxTime: number = 10;
   timer: string = `you have ${this.maxTime} minutes`;
@@ -29,9 +29,7 @@ export class SignupComponent {
   constructor() {
     this.currentTime = new Date();
     this.remainingTime();
-    this.email.valueChanges.subscribe((res) => {
-      console.log(res);
-    });
+    this.email.valueChanges.subscribe((res) => {});
   }
 
   remainingTime() {
@@ -47,6 +45,10 @@ export class SignupComponent {
   }
 
   signup() {
-    console.log(this.email.value);
+    console.log(this.fullName);
+    // let user: User = {
+    //   email: this.email.value,
+
+    // }
   }
 }
