@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LOGIN_TYPE, User } from 'src/app/models/user.model';
@@ -17,11 +18,11 @@ export class SignupComponent {
   formGrp: FormGroup;
   strength!: string;
   fullName: string = 'Chandan';
-  @Input() userType: string = LOGIN_TYPE.user;
+  @Input() userType!: LOGIN_TYPE;
   maxTime: number = 10;
   timer: string = `you have ${this.maxTime} minutes`;
   currentTime!: Date;
-  constructor() {
+  constructor(private httpClient: HttpClient) {
     this.formGrp = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
@@ -75,10 +76,29 @@ export class SignupComponent {
   }
 
   signup() {
-    console.log(this.formGrp.value);
-    // let user: User = {
-    //   email: this.email.value,
-    //   address:this.formGrp.controls['address'].value
-    // }
+    console.log(this.formGrp.value, this.userType);
+
+    if (this.formGrp.invalid) return;
+
+    let data = this.formGrp.value;
+    let user: User = {
+      address: data.address,
+      email: data.email,
+      fullName: data.fullName,
+      mobileNo: data.mobileNo,
+      password: data.password,
+      photoUrl: '',
+      userType: this.userType,
+      id: data.email,
+    };
+    //todo save to database
+    this.httpClient.post('http://localhost:3000/user/signup', user).subscribe(
+      (res) => {
+        console.log('account created successfully');
+      },
+      (err) => {
+        console.log('error encountered', err);
+      }
+    );
   }
 }
