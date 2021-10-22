@@ -9,8 +9,15 @@ import { AuthModule } from '../app/auth/auth.module';
 import { SellerModule } from '../app/seller/seller.module';
 import { DemoComponent } from './demo/demo.component';
 import { AvatarComponent } from './avatar/avatar.component';
+import { HomeComponent } from './home/home.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { BlogComponent } from './blog/blog.component';
+import { FeaturesComponent } from './features/features.component';
+import { ShopComponent } from './shop/shop.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 @NgModule({
-  declarations: [AppComponent, NavBarComponent, DemoComponent, AvatarComponent],
+  declarations: [AppComponent, NavBarComponent, DemoComponent, AvatarComponent, HomeComponent, ContactUsComponent, AboutUsComponent, BlogComponent, FeaturesComponent, ShopComponent, PageNotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

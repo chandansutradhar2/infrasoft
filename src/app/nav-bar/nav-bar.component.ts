@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NavMenu } from '../models/menu.model';
 
 @Component({
@@ -8,11 +8,17 @@ import { NavMenu } from '../models/menu.model';
 })
 export class NavBarComponent implements OnInit {
   @Input() categories: NavMenu[];
+  @Input() btnValue: string = 'Login';
+  @Output() onBtnClick: EventEmitter<string> = new EventEmitter();
   constructor() {
     this.categories = [];
   }
 
   ngOnInit(): void {
     console.log(this.categories);
+  }
+
+  loginOutout() {
+    this.onBtnClick.emit(this.btnValue);
   }
 }

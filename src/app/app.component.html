@@ -1,2 +1,3 @@
-<cn-nav-bar [categories]="userNavCategories"></cn-nav-bar>
-<cn-signup [userType]="loginType"></cn-signup>
+<cn-nav-bar [btnValue]="btnValue" (onBtnClick)="handler($event)" [categories]="passingNavCatgories"></cn-nav-bar>
+<router-outlet></router-outlet>
+<!--<cn-signup [userType]="loginType"></cn-signup> -->

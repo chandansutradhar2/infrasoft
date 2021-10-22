@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { LOGIN_TYPE, User } from 'src/app/models/user.model';
 
 //decorator -metadata
@@ -16,13 +18,16 @@ import { LOGIN_TYPE, User } from 'src/app/models/user.model';
 })
 export class SignupComponent {
   formGrp: FormGroup;
+  msg: string = '';
   strength!: string;
   fullName: string = 'Chandan';
   @Input() userType!: LOGIN_TYPE;
   maxTime: number = 10;
   timer: string = `you have ${this.maxTime} minutes`;
   currentTime!: Date;
-  constructor(private httpClient: HttpClient) {
+  success: boolean = false;
+  failure: boolean = false;
+  constructor(private httpClient: HttpClient, private router: Router) {
     this.formGrp = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
@@ -43,20 +48,6 @@ export class SignupComponent {
 
     this.currentTime = new Date();
     this.remainingTime();
-
-    // this.formGrp.controls['password'].valueChanges.subscribe(
-    //   (value: string) => {
-    //     if (value.length < 6) {
-    //       this.strength = 'Weak';
-    //     } else if (value.length >= 6 && value.length < 10) {
-    //       this.strength = 'Average';
-    //     } else if (value.length >= 10) {
-    //       this.strength = 'Strong';
-    //     } else {
-    //       this.strength = 'Weak';
-    //     }
-    //   }
-    // );
   }
 
   public get form() {
@@ -78,7 +69,11 @@ export class SignupComponent {
   signup() {
     console.log(this.formGrp.value, this.userType);
 
-    if (this.formGrp.invalid) return;
+    if (this.formGrp.invalid) {
+      this.msg = 'please resolve all error in the form and retry again';
+      this.failure = true;
+      return;
+    }
 
     let data = this.formGrp.value;
     let user: User = {
@@ -94,11 +89,26 @@ export class SignupComponent {
     //todo save to database
     this.httpClient.post('http://localhost:3000/user/signup', user).subscribe(
       (res) => {
-        console.log('account created successfully');
+        this.success = true;
+        this.failure = false;
+        this.msg = 'account created successfully';
       },
       (err) => {
-        console.log('error encountered', err);
+        this.failure = true;
+        this.success = false;
+        err.error.error.code == 11000
+          ? (this.msg = 'email id already exists. please login')
+          : (this.msg = 'server error encountered');
       }
     );
+  }
+
+  close() {
+    this.failure = false;
+    this.success = false;
+  }
+
+  navigate() {
+    this.router.navigate(['login']);
   }
 }

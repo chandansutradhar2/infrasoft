@@ -8,12 +8,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item" *ngFor="let ele of categories">
-                    <a class="nav-link active" href="#">{{ele.name}}</a>
+                    <a class="nav-link active" [routerLink]="ele.url">{{ele.name}}</a>
                 </li>
             </ul>
         </div>
         <div class="end">
-            <cn-avatar></cn-avatar>
+            <!-- <cn-avatar></cn-avatar> -->
+            <button class="btn btn-primary" (click)="loginOutout()">{{btnValue}}</button>
         </div>
     </div>
 </nav>

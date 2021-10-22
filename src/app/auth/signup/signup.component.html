@@ -2,7 +2,13 @@
     <!-- Signup Start at: {{currentTime}} -->
     {{printTimeLeft()}}
 </div>
+
+
 <div class="container">
+
+    <ngb-alert [type]="'success'" *ngIf="success" (closed)="close()">{{ msg }}</ngb-alert>
+    <ngb-alert [type]="'danger'" *ngIf="failure" (closed)="close()">{{ msg }}</ngb-alert>
+
     <h3>Hello {{userType}}, Create an Account</h3>
 
     <form [formGroup]="formGrp">
@@ -81,7 +87,7 @@
     <div class="d-grid gap-2">
         <button class="btn btn-primary" type="button" (click)="signup()">CREATE
             ACCOUNT</button>
-        <button class="btn btn-link" type="button">Already Have an account? Login</button>
+        <button class="btn btn-link" type="button" (click)="navigate()">Already Have an account? Login</button>
     </div>
 
 </div>
