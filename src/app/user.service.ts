@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { User } from './models/user.model';
@@ -22,5 +23,9 @@ export class UserService {
     Object.assign(this.usr, null);
   }
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
+
+  checkEmailExists(email: string) {
+    return this.http.get('http://localhost:3000/user/exists?email=' + email);
+  }
 }
