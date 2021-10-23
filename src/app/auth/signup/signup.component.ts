@@ -94,6 +94,8 @@ export class SignupComponent {
       photoUrl: '',
       userType: this.userType,
       id: data.email,
+      createdOn: Date.now(),
+      createdBy: data.email,
     };
     //todo save to database
     this.httpClient.post('http://localhost:3000/user/signup', user).subscribe(

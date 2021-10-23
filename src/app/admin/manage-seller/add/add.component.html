@@ -3,7 +3,7 @@
         <div class="mb-3">
             <label for="businessName" class="form-label">Business Name</label>
             <input type="text" class="form-control" id="businessName" placeholder="Business/Shop Name"
-                formControlName="fullName">
+                formControlName="businessName">
             <div *ngIf="form.businessName.hasError('required') && form.businessName.touched"
                 style="display: inline !important;" class="invalid-feedback">
                 business Name is required.

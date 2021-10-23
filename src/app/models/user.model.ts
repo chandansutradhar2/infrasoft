@@ -7,6 +7,8 @@ export interface User {
   email: string;
   password: string;
   userType: LOGIN_TYPE;
+  createdOn: number;
+  createdBy?: string;
 }
 
 export enum LOGIN_TYPE {
