@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import { AsyncEmailValidator } from 'src/app/email-validator.service';
 import { LOGIN_TYPE, User } from 'src/app/models/user.model';
 
 //decorator -metadata
@@ -27,9 +28,17 @@ export class SignupComponent {
   currentTime!: Date;
   success: boolean = false;
   failure: boolean = false;
-  constructor(private httpClient: HttpClient, private router: Router) {
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private asyncValidator: AsyncEmailValidator
+  ) {
     this.formGrp = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl(
+        '',
+        [Validators.required, Validators.email],
+        [asyncValidator.validate]
+      ),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
