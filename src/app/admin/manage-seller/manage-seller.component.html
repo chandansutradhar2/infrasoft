@@ -8,9 +8,12 @@
         </div>
     </div>
     <hr>
+    <section *ngIf="list">
+        <cn-list></cn-list>
+    </section>
     <section *ngIf="add">
         <h3>Add New Seller</h3>
-        <cn-add></cn-add>
+        <cn-add (onCancel)="display('list')"></cn-add>
     </section>
     <section *ngIf="delete">
         <h2>Delete Seller</h2>

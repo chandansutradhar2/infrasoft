@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LOGIN_TYPE, User } from 'src/app/models/user.model';
 import { SellerService } from 'src/app/seller.service';
@@ -11,6 +11,7 @@ import { UserService } from 'src/app/user.service';
 })
 export class AddComponent implements OnInit {
   formGrp: FormGroup;
+  @Output() onCancel: EventEmitter<null> = new EventEmitter();
   constructor(
     private userSvc: UserService,
     private sellerSvc: SellerService,
@@ -60,5 +61,7 @@ export class AddComponent implements OnInit {
       .catch((err) => alert(err));
   }
 
-  cancel() {}
+  cancel() {
+    this.onCancel.emit();
+  }
 }
