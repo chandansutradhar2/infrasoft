@@ -10,6 +10,7 @@ import { ReportComponent } from './report/report.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ListComponent } from './manage-seller/list/list.component';
 import { AddComponent } from './manage-seller/add/add.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -46,7 +47,12 @@ const routes: Routes = [
     ListComponent,
     AddComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes)],
+  imports: [
+    CommonModule,
+    NgxDatatableModule,
+    ReactiveFormsModule,
+    RouterModule.forChild(routes),
+  ],
   exports: [RouterModule],
 })
 export class AdminModule {}

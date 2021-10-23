@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from './models/user.model';
+
+import { LOGIN_TYPE, User } from './models/user.model';
+import * as env from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +29,30 @@ export class SellerService {
 
   deleteSeller() {}
 
-  updateSeller() {}
+  getAllSeller(): Promise<User[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get(env.environment.apiUrl + 'user/getAllSeller').subscribe(
+        (r: any) => {
+          if (r.sellers && r.sellers.length > 0) {
+            let res: User[] = r.sellers as User[];
+            let sellers: User[] = [];
+            sellers = res.filter((ele) => ele.userType == LOGIN_TYPE.seller);
+            resolve(sellers);
+          } else {
+            reject('no sellers found');
+          }
+        },
+        (err) => {
+          reject(err);
+        }
+      );
+    });
+  }
+  updateSeller() {
+    return new Promise((resolve, reject) => {});
+  }
 
-  disableSeller() {}
+  disableSeller() {
+    return new Promise((resolve, reject) => {});
+  }
 }

@@ -16,7 +16,9 @@ import { BlogComponent } from './blog/blog.component';
 import { FeaturesComponent } from './features/features.component';
 import { ShopComponent } from './shop/shop.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { AdminModule } from './admin/admin.module';
+
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +33,12 @@ import { AdminModule } from './admin/admin.module';
     ShopComponent,
     PageNotFoundComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    NgxDatatableModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
