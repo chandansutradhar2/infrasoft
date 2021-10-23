@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit {
         (r: any) => {
           this.msg = 'Welcome Back ' + r.user.fullName;
           this.userSvc.setUser(r.user);
+          localStorage.setItem('user', JSON.stringify(r.user));
           this.success = true;
           this.failure = false;
           setTimeout(() => {

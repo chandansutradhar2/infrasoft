@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavMenu } from './models/menu.model';
-import { LOGIN_TYPE } from './models/user.model';
+import { LOGIN_TYPE, User } from './models/user.model';
 import { UserService } from './user.service';
 
 @Component({
@@ -12,7 +12,9 @@ import { UserService } from './user.service';
 export class AppComponent {
   loginType = LOGIN_TYPE.user;
   btnValue: string = 'Login';
+  user!: User;
   passingNavCatgories: NavMenu[] = [];
+
   adminNavCategories: NavMenu[] = [
     { url: '', name: 'Dashboard', icon: '' },
     { url: '', name: 'Manage Seller', icon: '' },
@@ -40,31 +42,43 @@ export class AppComponent {
     { url: 'contact', name: 'Contact', icon: '' },
   ];
   constructor(private userSvc: UserService, private router: Router) {
+    let tmp = localStorage.getItem('user');
+
+    if (tmp) {
+      this.user = JSON.parse(tmp);
+      this.userSvc.setUser(this.user);
+      this.setNavBar();
+    }
+
     this.userSvc.onUserChange.subscribe((user) => {
-      if (user) {
-        this.btnValue = 'Logout';
-        switch (user.userType) {
-          case LOGIN_TYPE.admin:
-            this.passingNavCatgories = this.adminNavCategories;
-
-            break;
-          case LOGIN_TYPE.seller:
-            this.passingNavCatgories = this.sellerNavCategories;
-            break;
-          case LOGIN_TYPE.user:
-            this.passingNavCatgories = this.userNavCategories;
-            break;
-
-          default:
-            this.passingNavCatgories = this.userNavCategories;
-            break;
-        }
-      }
+      this.user = user;
+      this.userSvc.setUser(this.user);
+      this.setNavBar();
     });
   }
 
+  setNavBar() {
+    if (this.user) {
+      this.btnValue = 'Logout';
+      switch (this.user.userType) {
+        case LOGIN_TYPE.admin:
+          this.passingNavCatgories = this.adminNavCategories;
+
+          break;
+        case LOGIN_TYPE.seller:
+          this.passingNavCatgories = this.sellerNavCategories;
+          break;
+        case LOGIN_TYPE.user:
+          this.passingNavCatgories = this.userNavCategories;
+          break;
+
+        default:
+          this.passingNavCatgories = this.userNavCategories;
+          break;
+      }
+    }
+  }
   handler(ev: string) {
-    alert(ev);
     if (ev == 'Login') {
       this.router.navigate(['login']);
     } else {
