@@ -15,7 +15,8 @@ import { ShopComponent } from './shop/shop.component';
 const routes: Routes = [
   {
     path: 'seller',
-    component: DemoComponent,
+    loadChildren: () =>
+      import('../app/seller/seller.module').then((adm) => adm.SellerModule),
   },
   {
     path: 'admin',

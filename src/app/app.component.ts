@@ -16,12 +16,12 @@ export class AppComponent {
   passingNavCatgories: NavMenu[] = [];
 
   adminNavCategories: NavMenu[] = [
-    { url: '', name: 'Dashboard', icon: '' },
-    { url: '', name: 'Manage Seller', icon: '' },
-    { url: '', name: 'Manger User', icon: '' },
-    { url: '', name: 'Financial', icon: '' },
-    { url: '', name: 'Order Tracking', icon: '' },
-    { url: '', name: 'Reports', icon: '' },
+    { url: 'admin', name: 'Dashboard', icon: '' },
+    { url: 'admin/seller', name: 'Manage Seller', icon: '' },
+    { url: 'admin/user', name: 'Manger User', icon: '' },
+    { url: 'admin/finance', name: 'Financial', icon: '' },
+    { url: 'admin/om', name: 'Order Tracking', icon: '' },
+    { url: 'admin/report', name: 'Reports', icon: '' },
   ];
 
   sellerNavCategories: NavMenu[] = [
@@ -47,14 +47,15 @@ export class AppComponent {
     if (tmp) {
       this.user = JSON.parse(tmp);
       this.userSvc.setUser(this.user);
-      this.setNavBar();
     }
 
     this.userSvc.onUserChange.subscribe((user) => {
       this.user = user;
-      this.userSvc.setUser(this.user);
+      //this.userSvc.setUser(this.user);
       this.setNavBar();
     });
+
+    this.setNavBar();
   }
 
   setNavBar() {
@@ -63,10 +64,11 @@ export class AppComponent {
       switch (this.user.userType) {
         case LOGIN_TYPE.admin:
           this.passingNavCatgories = this.adminNavCategories;
-
+          this.router.navigate(['admin']);
           break;
         case LOGIN_TYPE.seller:
           this.passingNavCatgories = this.sellerNavCategories;
+          this.router.navigate(['seller']);
           break;
         case LOGIN_TYPE.user:
           this.passingNavCatgories = this.userNavCategories;
@@ -76,6 +78,8 @@ export class AppComponent {
           this.passingNavCatgories = this.userNavCategories;
           break;
       }
+    } else {
+      this.passingNavCatgories = this.userNavCategories;
     }
   }
   handler(ev: string) {
@@ -84,6 +88,7 @@ export class AppComponent {
     } else {
       this.userSvc.logout();
       localStorage.removeItem('user');
+      this.btnValue = 'Login';
     }
   }
 }

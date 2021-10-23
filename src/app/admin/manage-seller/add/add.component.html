@@ -1,0 +1,90 @@
+<div class="container">
+    <form [formGroup]="formGrp">
+        <div class="mb-3">
+            <label for="businessName" class="form-label">Business Name</label>
+            <input type="text" class="form-control" id="businessName" placeholder="Business/Shop Name"
+                formControlName="fullName">
+            <div *ngIf="form.businessName.hasError('required') && form.businessName.touched"
+                style="display: inline !important;" class="invalid-feedback">
+                business Name is required.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" formControlName="email" id="email" placeholder="name@example.com">
+            <div *ngIf="formGrp.controls['email'].hasError('email')" id="emailvalidation"
+                style="display: inline !important;" class="invalid-feedback">
+                Please enter a valid email.
+            </div>
+            <div *ngIf="formGrp.controls['email'].hasError('required') && formGrp.controls['email'].dirty==true"
+                id="emailvalidation" style="display: inline !important;" class="invalid-feedback">
+                Email cannot be left blank.
+            </div>
+
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" formControlName="password" id="password">
+            <span [ngSwitch]="form.password.value.length">
+                <div *ngSwitchCase="4" style="color: rgb(209, 60, 60);">
+                    Weak Password
+                </div>
+                <div *ngSwitchCase="7" style="color: rgb(236, 201, 86);">
+                    Average Password
+                </div>
+                <div *ngSwitchCase="10" style="color: rgb(97, 240, 84);">
+                    Strong Password
+                </div>
+                <div *ngSwitchDefault>
+                </div>
+            </span>
+            <div *ngIf="formGrp.controls['password'].hasError('required') && form.password.dirty" id="emailvalidation"
+                style="display: inline !important;" class="invalid-feedback">
+                Password cannot be left blank.
+            </div>
+            <div *ngIf="formGrp.controls['password'].hasError('minlength') && formGrp.controls['password'].dirty==true"
+                id="emailvalidation" style="display: inline !important;" class="invalid-feedback">
+                Email cannot be left blank.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="fullName" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="fullName" placeholder="Full Name" formControlName="fullName">
+            <div *ngIf="form.fullName.hasError('required') && form.fullName.touched" id="emailvalidation"
+                style="display: inline !important;" class="invalid-feedback">
+                Full Name is required.
+            </div>
+            <div *ngIf="formGrp.get('fullName')?.hasError('pattern') && formGrp.get('fullName')?.touched==true"
+                id="emailvalidation" style="display: inline !important;" class="invalid-feedback">
+                Full Name cannot contains numbers or special characters.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <textarea class="form-control" id="address" rows="3" formControlName="address"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">MobileNo</label>
+            <input type="tel" class="form-control" placeholder="10 digit mobile no" formControlName="mobileNo">
+            <div *ngIf="form.mobileNo.hasError('required') && form.mobileNo.touched" id="emailvalidation"
+                style="display: inline !important;" class="invalid-feedback">
+                Mobile is required.
+            </div>
+            <div *ngIf="formGrp.controls['mobileNo'].hasError('minlength') && formGrp.controls['mobileNo'].dirty==true"
+                id="emailvalidation" style="display: inline !important;" class="invalid-feedback">
+                Mobile No must be 10 digit only
+            </div>
+            <div *ngIf="formGrp.controls['mobileNo'].hasError('maxlength') && formGrp.controls['mobileNo'].dirty==true"
+                id="emailvalidation" style="display: inline !important;" class="invalid-feedback">
+                Mobile No cannot be more than 10 digit only
+            </div>
+        </div>
+    </form>
+    <div>
+        <button class="btn btn-link" type="button" (click)="cancel()">Cancel</button>
+        <button class="btn btn-primary" type="button" (click)="createSeller()">Save</button>
+    </div>
+
+</div>

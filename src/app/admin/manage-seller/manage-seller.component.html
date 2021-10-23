@@ -1,0 +1,22 @@
+<div class="container">
+    <div style="margin:1rem">
+
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary" (click)="display('add')">Add Seller</button>
+            <button type="button" class="btn btn-warning" (click)="display('delete')">Delete Seller</button>
+            <button type="button" class="btn btn-primary" (click)="display('edit')">Edit Seller</button>
+        </div>
+    </div>
+    <hr>
+    <section *ngIf="add">
+        <h3>Add New Seller</h3>
+        <cn-add></cn-add>
+    </section>
+    <section *ngIf="delete">
+        <h2>Delete Seller</h2>
+    </section>
+    <section *ngIf="edit">
+        <h3>EditSeller</h3>
+        <cn-add></cn-add>
+    </section>
+</div>
