@@ -80,9 +80,10 @@ export class AppComponent {
   }
   handler(ev: string) {
     if (ev == 'Login') {
-      this.router.navigate(['login']);
+      this.router.navigate(['auth']);
     } else {
       this.userSvc.logout();
+      localStorage.removeItem('user');
     }
   }
 }

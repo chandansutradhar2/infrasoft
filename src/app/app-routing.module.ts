@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { BlogComponent } from './blog/blog.component';
@@ -13,11 +14,19 @@ import { ShopComponent } from './shop/shop.component';
 
 const routes: Routes = [
   {
-    path: 'demo',
+    path: 'seller',
     component: DemoComponent,
   },
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('../app/admin/admin.module').then((adm) => adm.AdminModule),
+  },
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('../app/auth/auth.module').then((a) => a.AuthModule),
+  },
   {
     path: '',
     redirectTo: 'home',

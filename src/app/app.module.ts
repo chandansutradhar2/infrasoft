@@ -16,15 +16,22 @@ import { BlogComponent } from './blog/blog.component';
 import { FeaturesComponent } from './features/features.component';
 import { ShopComponent } from './shop/shop.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AdminModule } from './admin/admin.module';
 @NgModule({
-  declarations: [AppComponent, NavBarComponent, DemoComponent, AvatarComponent, HomeComponent, ContactUsComponent, AboutUsComponent, BlogComponent, FeaturesComponent, ShopComponent, PageNotFoundComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    AuthModule,
-    SellerModule,
+  declarations: [
+    AppComponent,
+    NavBarComponent,
+    DemoComponent,
+    AvatarComponent,
+    HomeComponent,
+    ContactUsComponent,
+    AboutUsComponent,
+    BlogComponent,
+    FeaturesComponent,
+    ShopComponent,
+    PageNotFoundComponent,
   ],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })

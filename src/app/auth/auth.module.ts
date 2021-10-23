@@ -9,6 +9,17 @@ import {
   NgbPaginationModule,
   NgbAlertModule,
 } from '@ng-bootstrap/ng-bootstrap';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
+  {
+    path: 'reset',
+    component: ResetPasswordComponent,
+  },
+];
 
 @NgModule({
   declarations: [
@@ -17,13 +28,14 @@ import {
     ResetPasswordComponent,
     UserProfileComponent,
   ],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbAlertModule],
-  exports: [
-    LoginComponent,
-    SignupComponent,
-    ResetPasswordComponent,
-    UserProfileComponent,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbAlertModule,
+    RouterModule.forChild(routes),
   ],
+  exports: [RouterModule],
   providers: [],
 })
 export class AuthModule {}
