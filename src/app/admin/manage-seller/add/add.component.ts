@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { LOGIN_TYPE, User } from 'src/app/models/user.model';
+import { LOGIN_TYPE } from 'src/app/models/user.model';
+import { Seller } from 'src/app/models/seller.model';
 import { SellerService } from 'src/app/seller.service';
 import { UserService } from 'src/app/user.service';
 
@@ -40,12 +41,13 @@ export class AddComponent implements OnInit {
     }
 
     let data = this.formGrp.value;
-    let seller: User = {
+    let seller: Seller = {
       address: data.address,
       email: data.email,
       fullName: data.fullName,
       mobileNo: data.mobileNo,
       password: data.password,
+      businessName: data.businessName,
       photoUrl: '',
       userType: LOGIN_TYPE.seller,
       id: data.email,
