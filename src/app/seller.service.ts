@@ -48,7 +48,6 @@ export class SellerService {
   updateSeller() {
     return new Promise((resolve, reject) => {});
   }
-
   disableSeller() {
     return new Promise((resolve, reject) => {});
   }

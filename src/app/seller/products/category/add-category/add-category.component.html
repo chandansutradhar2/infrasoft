@@ -12,4 +12,8 @@
                 formControlName="name" aria-describedby="basic-addon1" formControlName="description"></textarea>
         </div>
     </form>
+    <div>
+        <button class="btn btn-link" [disabled]="loading" type="button" (click)="cancel()">Cancel</button>
+        <spin-button [label]="'Save Category'" [showLoader]="loading" (onClicked)="createCategory()"></spin-button>
+    </div>
 </div>
