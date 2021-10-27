@@ -15,6 +15,9 @@ import {
   NgbDropdownModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CategoryComponent } from './products/category/category.component';
+import { AddCategoryComponent } from './products/category/add-category/add-category.component';
+import { ListProductComponent } from './products/list-product/list-product.component';
 
 const routes: Routes = [
   {
@@ -30,6 +33,21 @@ const routes: Routes = [
   {
     path: 'product',
     component: ProductMainComponent,
+    children: [
+      {
+        path: 'add-product',
+        component: AddProductComponent,
+      },
+      { path: 'add-category', component: AddCategoryComponent },
+      {
+        path: 'view-category',
+        component: CategoryComponent,
+      },
+      {
+        path: 'list-product',
+        component: ListProductComponent,
+      },
+    ],
   },
   {
     path: 'order-management',
@@ -54,11 +72,16 @@ const routes: Routes = [
     RatingMgmtComponent,
     BusinessMgmtComponent,
     ProductMainComponent,
+    CategoryComponent,
+    AddCategoryComponent,
+    ListProductComponent,
   ],
   imports: [
     CommonModule,
     NgbPaginationModule,
     NgbAlertModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbDropdownModule,
     RouterModule.forChild(routes),
     SharedModule,

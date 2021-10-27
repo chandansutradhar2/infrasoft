@@ -1,0 +1,15 @@
+<div>
+    <form [formGroup]="formGrp">
+        <div class="input-group mb-3">
+            <label>Enter Category Name</label>
+            <span class="input-group-text" id="basic-addon1">@</span>
+            <input type="text" class="form-control" placeholder="Category Name" aria-label="Username"
+                formControlName="name" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <label>Enter Category Description</label>
+            <textarea type="text" class="form-control" placeholder="Description" aria-label="Username"
+                formControlName="name" aria-describedby="basic-addon1" formControlName="description"></textarea>
+        </div>
+    </form>
+</div>

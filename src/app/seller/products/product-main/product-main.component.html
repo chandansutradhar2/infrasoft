@@ -1,18 +1,26 @@
 <div class="container" style="margin:1rem">
     <ul class="nav nav-pills nav-fill">
         <li class="nav-item">
-            <a class="nav-link" [ngClass]="{'active': viewcategory}" (click)="changeView('viewcategory')">View
+            <a class="nav-link" [ngStyle]="{'background-color':viewcategory?'#dc3545':'#ffff'}"
+                [ngClass]="{'active': viewcategory}" (click)="changeView('viewcategory')"
+                [routerLink]="'view-category'">View
                 Categories</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" [ngClass]="{'active': viewproduct}" (click)="changeView('viewproduct')">View
+            <a class="nav-link" [ngStyle]="{'background-color':viewproduct?'#dc3545':'#ffff'}"
+                [ngClass]="{'active': viewproduct}" (click)="changeView('viewproduct')"
+                [routerLink]="'list-product'">View
                 Products</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" [ngClass]="{'active': addproduct}" (click)="changeView('addproduct')">Add Product</a>
+            <a class="nav-link" [ngStyle]="{'background-color':addproduct?'#dc3545':'#ffff'}"
+                [ngClass]="{'active': addproduct}" (click)="changeView('addproduct')" [routerLink]="'add-product'">Add
+                Product</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" [ngClass]="{'active': addcategory}" (click)="changeView('addcategory')">Add
+            <a class="nav-link" [ngStyle]="{'background-color':addcategory?'#dc3545':'#ffff'}"
+                [ngClass]="{'active': addcategory}" (click)="changeView('addcategory')"
+                [routerLink]="'add-category'">Add
                 Categories</a>
         </li>
     </ul>
@@ -20,8 +28,9 @@
     <section>
         <div class="card">
             <div class="card-body">
-                This is some text within a card body.
+                <router-outlet></router-outlet>
             </div>
+
         </div>
     </section>
 </div>
