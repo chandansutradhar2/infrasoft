@@ -11,6 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ListComponent } from './manage-seller/list/list.component';
 import { AddComponent } from './manage-seller/add/add.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { SpinnerButtonComponent } from '../utils/spinner-button.component';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -52,6 +54,7 @@ const routes: Routes = [
     NgxDatatableModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
+    SharedModule,
   ],
   exports: [RouterModule],
 })

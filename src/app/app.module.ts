@@ -16,8 +16,9 @@ import { BlogComponent } from './blog/blog.component';
 import { FeaturesComponent } from './features/features.component';
 import { ShopComponent } from './shop/shop.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-
+import { NgHttpLoaderModule } from 'ng-http-loader';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { SpinnerButtonComponent } from './utils/spinner-button.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     AppRoutingModule,
     HttpClientModule,
     NgxDatatableModule,
+    NgHttpLoaderModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

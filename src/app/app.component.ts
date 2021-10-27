@@ -25,12 +25,11 @@ export class AppComponent {
   ];
 
   sellerNavCategories: NavMenu[] = [
-    { url: '', name: 'Dashboard', icon: '' },
-    { url: '', name: 'Add Product', icon: '' },
-    { url: '', name: 'Delete Product', icon: '' },
-    { url: '', name: 'Order Management', icon: '' },
-    { url: '', name: 'Rating & Review', icon: '' },
-    { url: '', name: 'Manage Business', icon: '' },
+    { url: 'seller', name: 'Dashboard', icon: '' },
+    { url: 'seller/product', name: 'Product Management', icon: '' },
+    { url: 'seller/order-management', name: 'Order Management', icon: '' },
+    { url: 'seller/rating', name: 'Rating & Review', icon: '' },
+    { url: 'seller/business', name: 'Manage Business', icon: '' },
   ];
 
   userNavCategories: NavMenu[] = [
@@ -72,6 +71,7 @@ export class AppComponent {
           break;
         case LOGIN_TYPE.user:
           this.passingNavCatgories = this.userNavCategories;
+
           break;
 
         default:

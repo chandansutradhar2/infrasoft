@@ -4,6 +4,9 @@ import { LOGIN_TYPE } from 'src/app/models/user.model';
 import { Seller } from 'src/app/models/seller.model';
 import { SellerService } from 'src/app/seller.service';
 import { UserService } from 'src/app/user.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { YesNoDialogComponent } from 'src/app/utils/yes-no-dialog/yes-no-dialog.component';
+import { DialogModal } from 'src/app/models/dialog.model';
 
 @Component({
   selector: 'cn-add',
@@ -12,11 +15,13 @@ import { UserService } from 'src/app/user.service';
 })
 export class AddComponent implements OnInit {
   formGrp: FormGroup;
+  loading: boolean = false;
   @Output() onCancel: EventEmitter<null> = new EventEmitter();
   constructor(
     private userSvc: UserService,
     private sellerSvc: SellerService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private modalService: NgbModal
   ) {
     this.formGrp = fb.group({
       businessName: ['', [Validators.required]],
@@ -39,7 +44,8 @@ export class AddComponent implements OnInit {
       alert('form is incomplete');
       return;
     }
-
+    this.loading = true;
+    this.formGrp.disable();
     let data = this.formGrp.value;
     let seller: Seller = {
       address: data.address,
@@ -58,12 +64,42 @@ export class AddComponent implements OnInit {
       .insertSeller(seller)
       .then(() => {
         alert('seller registered successfully');
+        //todo some feedback about success
         this.formGrp.reset();
       })
-      .catch((err) => alert(err));
+      .catch((err) => {
+        alert(err);
+      })
+      .finally(() => {
+        alert('finally invoked');
+        this.loading = false;
+        this.formGrp.enable();
+      });
   }
 
   cancel() {
-    this.onCancel.emit();
+    if (this.formGrp.touched && this.formGrp.dirty) {
+      const modalRef = this.modalService.open(YesNoDialogComponent);
+      let dialog: DialogModal = {
+        message:
+          'There are unsaved changes in the form. you really want to exit?',
+        title: 'Data loss Warning',
+      };
+      modalRef.componentInstance.dialog = dialog;
+      modalRef.closed.subscribe((r) => {
+        if (r) {
+          this.onCancel.emit();
+        }
+      });
+    } else {
+      this.onCancel.emit();
+    }
+  }
+
+  testLoader() {
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+    }, 5000);
   }
 }
