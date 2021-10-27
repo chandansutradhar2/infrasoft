@@ -1,0 +1,27 @@
+<div class="container" style="margin:1rem">
+    <ul class="nav nav-pills nav-fill">
+        <li class="nav-item">
+            <a class="nav-link" [ngClass]="{'active': viewcategory}" (click)="changeView('viewcategory')">View
+                Categories</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [ngClass]="{'active': viewproduct}" (click)="changeView('viewproduct')">View
+                Products</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [ngClass]="{'active': addproduct}" (click)="changeView('addproduct')">Add Product</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [ngClass]="{'active': addcategory}" (click)="changeView('addcategory')">Add
+                Categories</a>
+        </li>
+    </ul>
+    <hr>
+    <section>
+        <div class="card">
+            <div class="card-body">
+                This is some text within a card body.
+            </div>
+        </div>
+    </section>
+</div>

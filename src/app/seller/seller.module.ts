@@ -14,6 +14,7 @@ import {
   NgbAlertModule,
   NgbDropdownModule,
 } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -52,12 +53,13 @@ const routes: Routes = [
     OrderMgmtComponent,
     RatingMgmtComponent,
     BusinessMgmtComponent,
+    ProductMainComponent,
   ],
   imports: [
+    CommonModule,
     NgbPaginationModule,
     NgbAlertModule,
     NgbDropdownModule,
-    CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
   ],
