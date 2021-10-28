@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Category } from 'src/app/models/category.model';
 import { ProductService } from 'src/app/product.service';
 import { UserService } from 'src/app/user.service';
+import { CategoryExistValidator } from '../category.validator';
 
 @Component({
   selector: 'cn-add-category',
@@ -15,14 +16,26 @@ export class AddCategoryComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userSvc: UserService,
-    private productSvc: ProductService
+    private productSvc: ProductService // private catValidator: CategoryExistValidator
   ) {
-    this.formGrp = fb.group({
-      name: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-    });
+    this.formGrp = fb.group(
+      {
+        name: [
+          '',
+          [Validators.required],
+          new CategoryExistValidator(productSvc).validate.bind(this),
+        ],
+        description: ['', [Validators.required, Validators.minLength(100)]],
+      },
+      {
+        updateOn: 'blur',
+      }
+    );
   }
 
+  get form() {
+    return this.formGrp.controls;
+  }
   ngOnInit(): void {}
 
   cancel() {}

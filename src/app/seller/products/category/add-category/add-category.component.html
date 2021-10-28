@@ -2,14 +2,28 @@
     <form [formGroup]="formGrp">
         <div class="input-group mb-3">
             <label>Enter Category Name</label>
-            <span class="input-group-text" id="basic-addon1">@</span>
-            <input type="text" class="form-control" placeholder="Category Name" aria-label="Username"
-                formControlName="name" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" placeholder="Category Name" formControlName="name">
+            <div *ngIf="form.name.hasError('required') && (form.name.touched || form.name.dirty) "
+                style="display: inline !important;" class="invalid-feedback">
+                Category Name is required.
+            </div>
+            <div *ngIf="form.name.hasError('exists') && (form.name.touched || form.name.dirty) "
+                style="display: inline !important;" class="invalid-feedback">
+                Category already exists. please crate a different category.
+            </div>
         </div>
         <div class="input-group mb-3">
             <label>Enter Category Description</label>
             <textarea type="text" class="form-control" placeholder="Description" aria-label="Username"
                 formControlName="name" aria-describedby="basic-addon1" formControlName="description"></textarea>
+            <div *ngIf="form.description.hasError('required') && (form.description.touched || form.description.dirty) "
+                style="display: inline !important;" class="invalid-feedback">
+                Description is required.
+            </div>
+            <div *ngIf="form.description.hasError('minlength') && (form.description.touched || form.description.dirty) "
+                style="display: inline !important;" class="invalid-feedback">
+                Minimum size should be 100 characters.
+            </div>
         </div>
     </form>
     <div>

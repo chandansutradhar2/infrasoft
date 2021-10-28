@@ -26,6 +26,21 @@ export class ProductService {
     });
   }
 
+  checkCategory(categoryName: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.http
+        .post(environment.apiUrl + 'product/category/check', {
+          name: categoryName,
+        })
+        .subscribe(
+          (r: any) => {
+            resolve(r.status);
+          },
+          (err) => reject(err)
+        );
+    });
+  }
+
   getAllCategory(): Promise<Category[]> {
     return new Promise((resolve, reject) => {
       this.http.get(environment.apiUrl + 'product/category/all').subscribe(
