@@ -19,6 +19,16 @@
   </div>
 
   <div class="mb-3">
+    <label for="businessName" class="form-label">Batch No</label>
+    <input type="text" class="form-control" id="name" placeholder="Product Name" formControlName="batchNo">
+    <div *ngIf="form.batchNo.hasError('batchError') && form.batchNo.touched" style="display: inline !important;"
+      class="invalid-feedback">
+      Batch No is Invalid.
+    </div>
+  </div>
+
+
+  <div class="mb-3">
     <label for="sizes" class="form-label">Select Category</label>
     <select class="form-select" formControlName="categoryId">
       <option [value]="c._id" *ngFor="let c of categories">{{c.name}}</option>
@@ -52,13 +62,12 @@
     </div>
   </div>
 
-  <div class="mb-3" *ngIf="form.isDiscount.value">
-    <label class="form-label">Discount Rate</label>
-    <input type="number" class="form-control" id="discountRate" placeholder="Discount Rate"
-      formControlName="discountRate">
-    <div *ngIf="form.discountRate.hasError('required') && form.discountRate.touched" style="display: inline !important;"
+  <div class="mb-3">
+    <label class="form-label">Product Price</label>
+    <input type="number" class="form-control" id="price" placeholder="Price of Product" formControlName="price">
+    <div *ngIf="form.price.hasError('required') && form.price.touched" style="display: inline !important;"
       class="invalid-feedback">
-      Discount Rate is required.
+      Price is required.
     </div>
   </div>
 
@@ -66,9 +75,16 @@
     <label class="form-label">Discount Rate</label>
     <input type="number" class="form-control" id="discountRate" placeholder="Discount Rate"
       formControlName="discountRate">
-    <div *ngIf="form.discountRate.hasError('required') && form.discountRate.touched" style="display: inline !important;"
-      class="invalid-feedback">
+    <div *ngIf="form.discountRate.hasError('required')" style="display: inline !important;" class="invalid-feedback">
       Discount Rate is required.
+    </div>
+    <div *ngIf="formGrp.hasError('discountFixedError') && (form.discountRate.touched || form.discountRate.dirty) "
+      style="display: inline !important;" class="invalid-feedback">
+      Discount Rate cannot be more than the product price
+    </div>
+    <div *ngIf="formGrp.hasError('discountPercentError') && (form.discountRate.touched || form.discountRate.dirty) "
+      style="display: inline !important;" class="invalid-feedback">
+      Discount Rate cannot be more than 100%
     </div>
   </div>
 

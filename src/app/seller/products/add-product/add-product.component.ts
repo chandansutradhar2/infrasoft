@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
+  FormControl,
   FormGroup,
   ValidationErrors,
   ValidatorFn,
@@ -25,23 +26,29 @@ export class AddProductComponent implements OnInit {
       this.categories = r;
     });
 
-    this.formGrp = fb.group({
-      name: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      categoryId: ['', Validators.required],
-      dimensions: ['', [Validators.required]],
-      sizes: ['', [Validators.required]],
-      price: ['', [Validators.required]],
-      isDiscount: ['', [Validators.required]],
-      discountRate: [''],
-      discountType: [''],
-      isTaxInclusive: ['', [Validators.required]],
-      taxRate: [''],
-      taxType: [''],
-      quantity: ['', [Validators.required]],
-      createdOn: ['', [Validators.required]],
-      isDisabled: [''],
-    });
+    this.formGrp = fb.group(
+      {
+        name: ['', [Validators.required]],
+        description: ['', [Validators.required, Validators.minLength(100)]],
+        categoryId: ['', Validators.required],
+        dimensions: ['', [Validators.required]],
+        batchNo: ['', [batchValidator]],
+        sizes: ['', [Validators.required]],
+        price: ['', [Validators.required]],
+        isDiscount: ['', [Validators.required]],
+        discountRate: [''],
+        discountType: [''],
+        isTaxInclusive: ['', [Validators.required]],
+        taxRate: [''],
+        taxType: [''],
+        quantity: ['', [Validators.required]],
+        createdOn: ['', [Validators.required]],
+        isDisabled: [''],
+      },
+      {
+        validators: discountValidator,
+      }
+    );
 
     this.formGrp.controls['isDiscount'].valueChanges.subscribe((val) => {
       console.log(val);
@@ -74,25 +81,40 @@ export class AddProductComponent implements OnInit {
   }
 }
 
-export const discountValidator = (
-  discountTypeControl: AbstractControl,
-  discountRateControl: AbstractControl
-) => {
-  return (control: FormGroup): ValidationErrors | null => {
-    const discType = discountTypeControl.value;
-    const discountRate = discountRateControl.value;
-    if (!discType || !discountRate) {
-      return null;
-    }
-    // return password === confirmPassword ? null : { passwordMismatch: true };
-    if (discType == DISCOUNT_TYPE.FIXED) {
-      if (discountRate) {
-        return null;
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  };
+function batchValidator(control: FormControl): ValidationErrors | null {
+  const value: string = control.value;
+  if (!value) {
+    return null;
+  }
+  let batchNo = value.includes('BN');
+  return batchNo ? null : { batchError: true };
+}
+
+export const identityRevealedValidator: ValidatorFn = (
+  control: AbstractControl
+): ValidationErrors | null => {
+  const name = control.get('name');
+  const alterEgo = control.get('alterEgo');
+
+  return name && alterEgo && name.value === alterEgo.value
+    ? { identityRevealed: true }
+    : null;
+};
+
+export const discountValidator: ValidatorFn = (
+  fGroup: AbstractControl
+): ValidationErrors | null => {
+  const discRate = fGroup.get('discountRate')?.value;
+  const discType = fGroup.get('discountType')?.value;
+  const price = fGroup.get('price')?.value;
+  if (!discType || !discRate || !price) {
+    return null;
+  }
+  if (discType == DISCOUNT_TYPE.FIXED) {
+    return discRate <= price ? null : { discountFixedError: true };
+  } else if (discType == DISCOUNT_TYPE.PERCENTAGE) {
+    return discRate <= 100 ? null : { discountPercentError: true };
+  } else {
+    return null;
+  }
 };
