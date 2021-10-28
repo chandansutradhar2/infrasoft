@@ -1,5 +1,89 @@
-<p>
-  add-product works!
-</p>
+<form [formGroup]="formGrp" class="form">
+  <div class="mb-3">
+    <label for="businessName" class="form-label">Product Name</label>
+    <input type="text" class="form-control" id="name" placeholder="Product Name" formControlName="name">
+    <div *ngIf="form.name.hasError('required') && form.name.touched" style="display: inline !important;"
+      class="invalid-feedback">
+      Product Name is required.
+    </div>
+  </div>
 
-<spin-button [label]="'Add Product'"></spin-button>
+  <div class="mb-3">
+    <label for="email" class="form-label">Description</label>
+    <textarea class="form-control" formControlName="description">
+    </textarea>
+    <div *ngIf="formGrp.controls['description'].hasError('required') && formGrp.controls['description'].dirty==true"
+      style="display: inline !important;" class="invalid-feedback">
+      description cannot be left blank.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="sizes" class="form-label">Select Category</label>
+    <select class="form-select" formControlName="categoryId">
+      <option [value]="c._id" *ngFor="let c of categories">{{c.name}}</option>
+    </select>
+    <div *ngIf="formGrp.controls['categoryId'].hasError('required') && formGrp.controls['categoryId'].dirty"
+      style="display: inline !important;" class="invalid-feedback">
+      Category is mandatory
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="sizes" class="form-label">Select Size</label>
+    <select class="form-select" multiple formControlName="sizes">
+      <option value="S">S (Small)</option>
+      <option value="L">L (Large)</option>
+      <option value="M">M (Medium)</option>
+      <option value="XL">XL (Extra Large)</option>
+    </select>
+    <div *ngIf="formGrp.controls['sizes'].hasError('required') && formGrp.controls['sizes'].dirty==true"
+      style="display: inline !important;" class="invalid-feedback">
+      Please select atleast one size
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" formControlName="isDiscount">
+      <label class="form-check-label" for="flexCheckDefault">
+        Is Discount Applicable?
+      </label>
+    </div>
+  </div>
+
+  <div class="mb-3" *ngIf="form.isDiscount.value">
+    <label class="form-label">Discount Rate</label>
+    <input type="number" class="form-control" id="discountRate" placeholder="Discount Rate"
+      formControlName="discountRate">
+    <div *ngIf="form.discountRate.hasError('required') && form.discountRate.touched" style="display: inline !important;"
+      class="invalid-feedback">
+      Discount Rate is required.
+    </div>
+  </div>
+
+  <div class="mb-3" *ngIf="form.isDiscount.value">
+    <label class="form-label">Discount Rate</label>
+    <input type="number" class="form-control" id="discountRate" placeholder="Discount Rate"
+      formControlName="discountRate">
+    <div *ngIf="form.discountRate.hasError('required') && form.discountRate.touched" style="display: inline !important;"
+      class="invalid-feedback">
+      Discount Rate is required.
+    </div>
+  </div>
+
+  <div class="mb-3" *ngIf="form.isDiscount.value">
+    <label for="sizes" class="form-label">Select Discount Type</label>
+    <select class="form-select" formControlName="discountType">
+      <option [value]="c" *ngFor="let c of ['FIXED','PERCENTAGE']">{{c}}</option>
+    </select>
+    <div *ngIf="formGrp.controls['categoryId'].hasError('required') && formGrp.controls['categoryId'].dirty"
+      style="display: inline !important;" class="invalid-feedback">
+      Category is mandatory
+    </div>
+  </div>
+</form>
+<div>
+  <button class="btn btn-link" [disabled]="loading" type="button" (click)="cancel()">Cancel</button>
+  <spin-button [label]="'Save Product'" [showLoader]="loading" (onClicked)="createProduct()"></spin-button>
+</div>
