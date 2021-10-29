@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -11,6 +12,7 @@ import {
 import { Category } from 'src/app/models/category.model';
 import { DISCOUNT_TYPE } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/product.service';
+import { discountValidator } from './discount.validator';
 
 @Component({
   selector: 'cn-add-product',
@@ -31,7 +33,7 @@ export class AddProductComponent implements OnInit {
         name: ['', [Validators.required]],
         description: ['', [Validators.required, Validators.minLength(100)]],
         categoryId: ['', Validators.required],
-        dimensions: ['', [Validators.required]],
+        dimensions: fb.array([]),
         batchNo: ['', [batchValidator]],
         sizes: ['', [Validators.required]],
         price: ['', [Validators.required]],
@@ -69,11 +71,31 @@ export class AddProductComponent implements OnInit {
     });
   }
 
+  get dimensions() {
+    return this.formGrp.controls['dimensions'] as FormArray;
+  }
+
+  addDimension() {
+    const dimensionForm = this.fb.group({
+      height: ['', Validators.required],
+      width: ['', Validators.required],
+      length: [''],
+      weight: [''],
+      measurementType: '',
+    });
+
+    this.dimensions.push(dimensionForm);
+  }
+
+  deleteDimension(index: number) {
+    this.dimensions.removeAt(index);
+  }
   ngOnInit() {}
 
   get form() {
     return this.formGrp.controls;
   }
+
   cancel() {}
 
   createProduct() {
@@ -99,22 +121,4 @@ export const identityRevealedValidator: ValidatorFn = (
   return name && alterEgo && name.value === alterEgo.value
     ? { identityRevealed: true }
     : null;
-};
-
-export const discountValidator: ValidatorFn = (
-  fGroup: AbstractControl
-): ValidationErrors | null => {
-  const discRate = fGroup.get('discountRate')?.value;
-  const discType = fGroup.get('discountType')?.value;
-  const price = fGroup.get('price')?.value;
-  if (!discType || !discRate || !price) {
-    return null;
-  }
-  if (discType == DISCOUNT_TYPE.FIXED) {
-    return discRate <= price ? null : { discountFixedError: true };
-  } else if (discType == DISCOUNT_TYPE.PERCENTAGE) {
-    return discRate <= 100 ? null : { discountPercentError: true };
-  } else {
-    return null;
-  }
 };

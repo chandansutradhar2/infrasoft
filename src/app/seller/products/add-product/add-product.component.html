@@ -1,4 +1,7 @@
 <form [formGroup]="formGrp" class="form">
+
+  {{dimensions}}
+
   <div class="mb-3">
     <label for="businessName" class="form-label">Product Name</label>
     <input type="text" class="form-control" id="name" placeholder="Product Name" formControlName="name">
@@ -93,9 +96,36 @@
     <select class="form-select" formControlName="discountType">
       <option [value]="c" *ngFor="let c of ['FIXED','PERCENTAGE']">{{c}}</option>
     </select>
-    <div *ngIf="formGrp.controls['categoryId'].hasError('required') && formGrp.controls['categoryId'].dirty"
+    <div *ngIf="formGrp.controls['discountType'].hasError('required') && formGrp.controls['discountType'].dirty"
       style="display: inline !important;" class="invalid-feedback">
-      Category is mandatory
+      Discount Type is mandatory
+    </div>
+  </div>
+
+  <div class="form-array">
+    <button type="button" class="btn btn-outline-danger" (click)="addDimension()">Add Dimension</button>
+    <div class="dimension" formArrayName="dimensions">
+      <ng-container *ngFor="let dimensionForm of dimensions.controls;let i=index">
+        <div class="form-row" [formGroupName]=i>
+          <div class="mb-3">
+            <label class="form-label">Height</label>
+            <input type="number" class="form-control" id="price" placeholder="Height" formControlName="height">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Width</label>
+            <input type="number" class="form-control" id="price" placeholder="Width" formControlName="width">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Weight</label>
+            <input type="number" class="form-control" id="price" placeholder="Weight" formControlName="weight">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Length</label>
+            <input type="number" class="form-control" id="price" placeholder="length" formControlName="length">
+          </div>
+          <button type="button" class="btn btn-outline-danger" (click)="deleteDimension(i)">Remove</button>
+        </div>
+      </ng-container>
     </div>
   </div>
 </form>
