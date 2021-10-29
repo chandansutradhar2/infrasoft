@@ -17,6 +17,7 @@ import { ShopComponent } from './shop/shop.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { CartComponent } from './shop/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     FeaturesComponent,
     ShopComponent,
     PageNotFoundComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,
