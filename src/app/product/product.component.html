@@ -1,0 +1,22 @@
+<div class="card" style="width: 18rem; margin: 1rem;">
+    <h2>{{product.name}}</h2>
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">{{product.name}}</h5>
+        <p class="card-text">{{product.description}}</p>
+        <div>
+            <div *ngIf="!product.isDiscount" style="font-size: larger;">
+                {{product.price}}
+            </div>
+            <div *ngIf="product.isDiscount">
+                <div *ngIf="product.discountType=='PERCENTAGE'">
+                    Discounted Price {{product.price - ((product.price * product.discountRate)/100)}}
+                    <del>
+                        Price {{product.price}}
+                    </del>
+                </div>
+            </div>
+        </div>
+        <a class="btn btn-primary" (click)="addEvent()">add</a>
+    </div>
+</div>

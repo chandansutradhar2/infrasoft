@@ -36,17 +36,13 @@ export class HomeComponent implements OnInit {
   addToCart(product: Product) {
     let cartItems: CartItem[] = [];
     cartItems = this.stateSvc.cartItems;
-    // check if the item exists inside the cart.
-    // if yes inctement the item qty... else add new item in cart
+
     let idx = cartItems.findIndex((ele) => {
       return ele.itemId == product._id;
     });
     if (idx >= 0) {
-      //product already exists in cart.
-      //increment the quantity
       cartItems[idx].qty = cartItems[idx].qty + 1;
     } else {
-      //product doesn't exist in cart. add the product item
       cartItems.push({
         itemId: product._id || '',
         name: product.name,
