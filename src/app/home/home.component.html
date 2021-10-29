@@ -1,5 +1,5 @@
 <p>Welcome {{user?.fullName}}</p>
-<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+<!-- <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
             aria-current="true" aria-label="Slide 1"></button>
@@ -39,8 +39,20 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
-</div>
+</div> -->
+<section>
+    <div *ngFor="let p of products" class="list">
+        <div class="card" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{p.name}}</h5>
+                <p class="card-text">{{p.description}}</p>
+                <a class="btn btn-primary" (click)="addToCart(p)">add</a>
+            </div>
+        </div>
+    </div>
+</section>
 
 <section>
-    <button type="button" class="btn btn-primary" (click)="addToCart(demoProduct)">Add To Cart</button>
+    <button type="button" class="btn btn-primary">Add To Cart</button>
 </section>

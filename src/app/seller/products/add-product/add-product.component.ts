@@ -10,8 +10,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Category } from 'src/app/models/category.model';
-import { DISCOUNT_TYPE } from 'src/app/models/product.model';
+import { DISCOUNT_TYPE, Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/product.service';
+import { UserService } from 'src/app/user.service';
 import { discountValidator } from './discount.validator';
 
 @Component({
@@ -23,7 +24,11 @@ export class AddProductComponent implements OnInit {
   formGrp: FormGroup;
   loading: boolean = false;
   categories: Category[] = [];
-  constructor(private fb: FormBuilder, private prodtcSvc: ProductService) {
+  constructor(
+    private fb: FormBuilder,
+    private prodtcSvc: ProductService,
+    private userSvc: UserService
+  ) {
     this.prodtcSvc.getAllCategory().then((r) => {
       this.categories = r;
     });
@@ -31,20 +36,19 @@ export class AddProductComponent implements OnInit {
     this.formGrp = fb.group(
       {
         name: ['', [Validators.required]],
-        description: ['', [Validators.required, Validators.minLength(100)]],
+        description: ['', [Validators.required]],
         categoryId: ['', Validators.required],
         dimensions: fb.array([]),
         batchNo: ['', [batchValidator]],
         sizes: ['', [Validators.required]],
         price: ['', [Validators.required]],
-        isDiscount: ['', [Validators.required]],
+        isDiscount: [''],
         discountRate: [''],
         discountType: [''],
-        isTaxInclusive: ['', [Validators.required]],
+        isTaxExclusive: [''],
         taxRate: [''],
         taxType: [''],
         quantity: ['', [Validators.required]],
-        createdOn: ['', [Validators.required]],
         isDisabled: [''],
       },
       {
@@ -68,6 +72,19 @@ export class AddProductComponent implements OnInit {
 
       this.formGrp.controls['discountRate'].updateValueAndValidity();
       this.formGrp.controls['discountType'].updateValueAndValidity();
+    });
+
+    this.formGrp.controls['isTaxExclusive'].valueChanges.subscribe((val) => {
+      if (val === true) {
+        this.formGrp.controls['taxRate'].setValidators(Validators.required);
+        this.formGrp.controls['taxType'].setValidators(Validators.required);
+      } else {
+        this.formGrp.controls['taxRate'].clearValidators();
+        this.formGrp.controls['taxType'].clearValidators();
+      }
+
+      this.formGrp.controls['taxRate'].updateValueAndValidity();
+      this.formGrp.controls['taxType'].updateValueAndValidity();
     });
   }
 
@@ -99,7 +116,46 @@ export class AddProductComponent implements OnInit {
   cancel() {}
 
   createProduct() {
-    console.log(this.formGrp.value);
+    if (this.formGrp.invalid) {
+      return;
+    }
+    let data = this.formGrp.value;
+    this.loading = true;
+    this.formGrp.disable();
+    let product: Product = {
+      categoryId: data.categoryId,
+      createdBy: this.userSvc.getUser().id || '',
+      createdOn: Date.now(),
+      description: data.description,
+      dimensions: data.dimensions,
+      discountRate: data.discountRate,
+      discountType: data.discountType,
+      isDisabled: data.isDisabled || false,
+      isDiscount: data.isDiscount || false,
+      isTaxExclusive: data.isTaxExclusive || false,
+      name: data.name,
+      owner: this.userSvc.getUser().id || '',
+      price: data.price,
+      quantity: data.quantity,
+      sizes: data.sizes,
+      taxRate: data.taxRate,
+      taxType: data.taxType,
+      imageUrls: [],
+      videoUrls: [],
+    };
+
+    this.prodtcSvc
+      .addProduct(product)
+      .then(() => {
+        alert('product added successfully');
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        this.formGrp.reset();
+        this.loading = false;
+        this.formGrp.enable();
+      });
+    console.log(product);
   }
 }
 

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Category } from './models/category.model';
+import { Product } from './models/product.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,22 @@ export class ProductService {
           },
           (err) => reject(err)
         );
+    });
+  }
+
+  addProduct(product: Product) {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.apiUrl + 'product/create', product).subscribe(
+        (r: any) => {
+          if (r.status) {
+            resolve(r._id);
+            console.log(r._id);
+          } else {
+            reject(r.error);
+          }
+        },
+        (err) => reject(err)
+      );
     });
   }
 
@@ -57,6 +74,24 @@ export class ProductService {
       );
     });
   }
+
+  getAllProduct(): Promise<Product[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get(environment.apiUrl + 'product/all').subscribe(
+        (r: any) => {
+          if (r.status == true && r.products.length > 0) {
+            resolve(r.products);
+          } else {
+            reject('no products found');
+          }
+        },
+        (err) => {
+          reject(err);
+        }
+      );
+    });
+  }
+
   deleteCategory() {}
 
   disableCateory() {}

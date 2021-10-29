@@ -20,6 +20,15 @@
   </div>
 
   <div class="mb-3">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="isDisabled" formControlName="isDisabled">
+      <label class="form-check-label" for="isDisabled">
+        Disabled ?
+      </label>
+    </div>
+  </div>
+
+  <div class="mb-3">
     <label for="businessName" class="form-label">Batch No</label>
     <input type="text" class="form-control" id="name" placeholder="Product Name" formControlName="batchNo">
     <div *ngIf="form.batchNo.hasError('batchError') && form.batchNo.touched" style="display: inline !important;"
@@ -100,6 +109,45 @@
     </div>
   </div>
 
+  <div class="mb-3">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="isTaxExclusive" formControlName="isTaxExclusive">
+      <label class="form-check-label" for="flexCheckDefault">
+        Is Tax Exclusive ?
+      </label>
+    </div>
+  </div>
+
+  <div class="mb-3" *ngIf="form.isTaxExclusive.value">
+    <label for="sizes" class="form-label">Select Tax Type</label>
+    <select class="form-select" formControlName="taxType">
+      <option [value]="c" *ngFor="let c of ['FIXED','PERCENTAGE']">{{c}}</option>
+    </select>
+    <div *ngIf="formGrp.controls['taxType'].hasError('required') && formGrp.controls['taxType'].dirty"
+      style="display: inline !important;" class="invalid-feedback">
+      Tax Type is mandatory
+    </div>
+  </div>
+
+  <div class="mb-3" *ngIf="form.isTaxExclusive.value">
+    <label class="form-label">Tax Rate</label>
+    <input type="number" class="form-control" id="discountRate" placeholder="Tax Rate" formControlName="taxRate">
+    <div *ngIf="form.taxRate.hasError('required')" style="display: inline !important;" class="invalid-feedback">
+      Tax Rate is required.
+    </div>
+  </div>
+
+
+
+  <div class="mb-3">
+    <label for="quantity" class="form-label">Quantity</label>
+    <input type="number" class="form-control" id="name" placeholder="quantity" formControlName="quantity">
+    <div *ngIf="form.quantity.hasError('required') && form.quantity.touched" style="display: inline !important;"
+      class="invalid-feedback">
+      Qtantity is required.
+    </div>
+  </div>
+
   <div class="form-array">
     <button type="button" class="btn btn-outline-danger" (click)="addDimension()">Add Dimension</button>
     <div class="dimension" formArrayName="dimensions">
@@ -126,6 +174,7 @@
       </ng-container>
     </div>
   </div>
+
 </form>
 <div>
   <button class="btn btn-link" [disabled]="loading" type="button" (click)="cancel()">Cancel</button>

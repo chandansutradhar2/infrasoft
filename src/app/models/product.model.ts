@@ -1,6 +1,7 @@
 export interface Product {
   _id?: string;
   name: string;
+  type?: string;
   categoryId: string;
   imageUrls?: string[];
   videoUrls?: string[];
@@ -11,7 +12,7 @@ export interface Product {
   isDiscount: boolean;
   discountRate: number;
   discountType: DISCOUNT_TYPE;
-  isTaxInclusive: boolean;
+  isTaxExclusive: boolean;
   taxRate: number;
   taxType: DISCOUNT_TYPE;
   quantity: number;
