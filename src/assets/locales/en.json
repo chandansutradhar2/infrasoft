@@ -1,0 +1,24 @@
+{
+  "addProduct": {
+    "title": "Add Product",
+    "product": {
+      "lblProductName": "Product Name",
+      "placeholder": "Enter Product Name",
+      "reqError": "Product Name is Manadatory",
+      "minValidator": "Minimum Lenght should be more than 6"
+    },
+    "lblDescription": "Description",
+    "lblDisabled": "Disabled ?",
+    "lblBatchNo": "Batch No",
+    "lblCategory": "Select Category",
+    "lblSize": "Select Size",
+    "lblDiscountApplicable": "Is Discount Applicable",
+    "lblPrice": "Product Price",
+    "plPrice": "Price of product",
+    "errPriceReq": "Price is Required",
+    "lblQty": "Product Quantity",
+    "successMsg": "Product Added Successfully",
+    "errorMsg": "Failed to Add Product"
+  },
+  "viewProduct": {}
+}

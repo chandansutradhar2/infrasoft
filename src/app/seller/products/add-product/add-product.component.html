@@ -1,12 +1,15 @@
-<h3>{{'title' | translate }}</h3>
+<h3>{{'addProduct.title' | translate }}</h3>
+<img *ngIf="imgSrc" [src]="imgSrc" height="100px" width="100px" />
+<button class="btn btn-primary-outline" type="button" (click)="changeLanguage()">Toggle Language EN | HI</button>
 <form [formGroup]="formGrp" class="form">
 
   <div class="mb-3">
-    <label for="productName" class="form-label">{{'lblProductName' | translate}}</label>
-    <input type="text" class="form-control" id="name" placeholder="Product Name" formControlName="name">
+    <label for="productName" class="form-label">{{'addProduct.product.lblProductName' | translate}}</label>
+    <input type="text" class="form-control" id="name" [placeholder]="'addProduct.product.placeholder' | translate"
+      formControlName="name">
     <div *ngIf="form.name.hasError('required') && form.name.touched" style="display: inline !important;"
       class="invalid-feedback">
-      Product Name is required.
+      {{'addProduct.product.reqError' | translate}}
     </div>
   </div>
 

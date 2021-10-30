@@ -1,0 +1,24 @@
+{
+  "addProduct": {
+    "title": "उत्पाद जोड़ें",
+    "product": {
+      "lblProductName": "प्रोडक्ट का नाम",
+      "placeholder": "उत्पाद का नाम दर्ज करें",
+      "reqError": "उत्पाद का नाम अनिवार्य है",
+      "minValidator": "न्यूनतम लंबाई 6 . से अधिक होनी चाहिए"
+    },
+    "lblDescription": "विवरण",
+    "lblDisabled": "अक्षम है ?",
+    "lblBatchNo": "बैच नम्बर",
+    "lblCategory": "श्रेणी का चयन करें",
+    "lblSize": "आकार चुना",
+    "lblDiscountApplicable": "क्या छूट लागू है",
+    "lblPrice": "उत्पाद की कीमत",
+    "plPrice": "उत्पाद की कीमत",
+    "errPriceReq": "कीमत आवश्यक है",
+    "lblQty": "उत्पाद गुणवत्ता",
+    "successMsg": "उत्पाद सफलतापूर्वक जोड़ा गया",
+    "errorMsg": "Failed to Add Product In Hindi"
+  },
+  "viewProduct": {}
+}

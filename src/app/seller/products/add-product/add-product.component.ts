@@ -25,15 +25,28 @@ export class AddProductComponent implements OnInit {
   formGrp: FormGroup;
   loading: boolean = false;
   categories: Category[] = [];
+  succesMsg: string = '';
+  errorMsg: string = '';
+  imgSrc!: string;
+
   constructor(
     private transalateSvc: TranslateService,
     private fb: FormBuilder,
     private prodtcSvc: ProductService,
     private userSvc: UserService
   ) {
+    this.transalateSvc.setDefaultLang('en');
     this.prodtcSvc.getAllCategory().then((r) => {
       this.categories = r;
     });
+
+    this.transalateSvc
+      .get(['successMsg', 'errorMsg', 'missingKey'])
+      .subscribe((r: any) => {
+        this.succesMsg = r.successMsg;
+        this.errorMsg = r.errorMsg;
+        console.log(this.succesMsg, this.errorMsg);
+      });
 
     this.formGrp = fb.group(
       {
@@ -94,6 +107,15 @@ export class AddProductComponent implements OnInit {
     return this.formGrp.controls['dimensions'] as FormArray;
   }
 
+  changeLanguage() {
+    this.imgSrc = 'assets/images/404.jpg';
+    console.log(this.transalateSvc.currentLang);
+
+    this.transalateSvc.currentLang == 'en'
+      ? this.transalateSvc.use('hi')
+      : this.transalateSvc.use('en');
+  }
+
   addDimension() {
     const dimensionForm = this.fb.group({
       height: ['', Validators.required],
@@ -149,7 +171,9 @@ export class AddProductComponent implements OnInit {
     this.prodtcSvc
       .addProduct(product)
       .then(() => {
-        alert('product added successfully');
+        this.transalateSvc.get('successMsg').subscribe((r) => {
+          alert(r);
+        });
       })
       .catch((err) => console.log(err))
       .finally(() => {
@@ -169,14 +193,3 @@ function batchValidator(control: FormControl): ValidationErrors | null {
   let batchNo = value.includes('BN');
   return batchNo ? null : { batchError: true };
 }
-
-export const identityRevealedValidator: ValidatorFn = (
-  control: AbstractControl
-): ValidationErrors | null => {
-  const name = control.get('name');
-  const alterEgo = control.get('alterEgo');
-
-  return name && alterEgo && name.value === alterEgo.value
-    ? { identityRevealed: true }
-    : null;
-};
