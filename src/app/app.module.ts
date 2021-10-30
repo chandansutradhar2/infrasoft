@@ -19,6 +19,8 @@ import { NgHttpLoaderModule } from 'ng-http-loader';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CartComponent } from './shop/cart/cart.component';
 import { ProductComponent } from './product/product.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [

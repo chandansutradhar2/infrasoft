@@ -18,6 +18,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategoryComponent } from './products/category/category.component';
 import { AddCategoryComponent } from './products/category/add-category/add-category.component';
 import { ListProductComponent } from './products/list-product/list-product.component';
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService,
+  TranslateStore,
+} from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 const routes: Routes = [
   {
@@ -63,6 +71,10 @@ const routes: Routes = [
   },
 ];
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 @NgModule({
   declarations: [
     AddProductComponent,
@@ -78,6 +90,14 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    TranslateModule.forChild({
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
     NgbPaginationModule,
     NgbAlertModule,
     FormsModule,
@@ -87,6 +107,6 @@ const routes: Routes = [
     SharedModule,
   ],
   exports: [AddProductComponent, EditProductComponent, RouterModule],
-  providers: [],
+  providers: [TranslateService, TranslateStore],
 })
 export class SellerModule {}

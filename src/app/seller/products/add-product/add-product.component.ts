@@ -9,6 +9,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { Category } from 'src/app/models/category.model';
 import { DISCOUNT_TYPE, Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/product.service';
@@ -25,6 +26,7 @@ export class AddProductComponent implements OnInit {
   loading: boolean = false;
   categories: Category[] = [];
   constructor(
+    private transalateSvc: TranslateService,
     private fb: FormBuilder,
     private prodtcSvc: ProductService,
     private userSvc: UserService

@@ -1,7 +1,8 @@
+<h3>{{'title' | translate }}</h3>
 <form [formGroup]="formGrp" class="form">
 
   <div class="mb-3">
-    <label for="businessName" class="form-label">Product Name</label>
+    <label for="productName" class="form-label">{{'lblProductName' | translate}}</label>
     <input type="text" class="form-control" id="name" placeholder="Product Name" formControlName="name">
     <div *ngIf="form.name.hasError('required') && form.name.touched" style="display: inline !important;"
       class="invalid-feedback">
@@ -10,7 +11,7 @@
   </div>
 
   <div class="mb-3">
-    <label for="email" class="form-label">Description</label>
+    <label for="email" class="form-label">{{'lblDescription' | translate}}</label>
     <textarea class="form-control" formControlName="description">
     </textarea>
     <div *ngIf="formGrp.controls['description'].hasError('required') && formGrp.controls['description'].dirty==true"
@@ -23,13 +24,13 @@
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value="" id="isDisabled" formControlName="isDisabled">
       <label class="form-check-label" for="isDisabled">
-        Disabled ?
+        {{'lblDisabled' | translate}}
       </label>
     </div>
   </div>
 
   <div class="mb-3">
-    <label for="businessName" class="form-label">Batch No</label>
+    <label for="businessName" class="form-label">{{'lblBatchNo' | translate}}</label>
     <input type="text" class="form-control" id="name" placeholder="Product Name" formControlName="batchNo">
     <div *ngIf="form.batchNo.hasError('batchError') && form.batchNo.touched" style="display: inline !important;"
       class="invalid-feedback">
@@ -39,7 +40,7 @@
 
 
   <div class="mb-3">
-    <label for="sizes" class="form-label">Select Category</label>
+    <label for="sizes" class="form-label">{{'lblCategory' | translate}}</label>
     <select class="form-select" formControlName="categoryId">
       <option [value]="c._id" *ngFor="let c of categories">{{c.name}}</option>
     </select>
@@ -50,7 +51,7 @@
   </div>
 
   <div class="mb-3">
-    <label for="sizes" class="form-label">Select Size</label>
+    <label for="sizes" class="form-label">{{'lblSize' | translate}}</label>
     <select class="form-select" multiple formControlName="sizes">
       <option value="S">S (Small)</option>
       <option value="L">L (Large)</option>
@@ -67,17 +68,17 @@
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" formControlName="isDiscount">
       <label class="form-check-label" for="flexCheckDefault">
-        Is Discount Applicable?
+        {{'lblDiscountApplicable' | translate}}
       </label>
     </div>
   </div>
 
   <div class="mb-3">
-    <label class="form-label">Product Price</label>
-    <input type="number" class="form-control" id="price" placeholder="Price of Product" formControlName="price">
+    <label class="form-label">{{'lblPrice' | translate}}</label>
+    <input type="number" class="form-control" id="price" [placeholder]="'plPrice' | translate" formControlName="price">
     <div *ngIf="form.price.hasError('required') && form.price.touched" style="display: inline !important;"
       class="invalid-feedback">
-      Price is required.
+      {{'errPriceReq' | translate}}
     </div>
   </div>
 
@@ -140,7 +141,7 @@
 
 
   <div class="mb-3">
-    <label for="quantity" class="form-label">Quantity</label>
+    <label for="quantity" class="form-label">{{'lblQty' | translate}}</label>
     <input type="number" class="form-control" id="name" placeholder="quantity" formControlName="quantity">
     <div *ngIf="form.quantity.hasError('required') && form.quantity.touched" style="display: inline !important;"
       class="invalid-feedback">
