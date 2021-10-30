@@ -148,7 +148,7 @@ export class AddProductComponent implements OnInit {
     this.formGrp.disable();
     let product: Product = {
       categoryId: data.categoryId,
-      createdBy: this.userSvc.getUser().id || '',
+      createdBy: this.userSvc.getUser()._id || '',
       createdOn: Date.now(),
       description: data.description,
       dimensions: data.dimensions,
@@ -158,7 +158,7 @@ export class AddProductComponent implements OnInit {
       isDiscount: data.isDiscount || false,
       isTaxExclusive: data.isTaxExclusive || false,
       name: data.name,
-      owner: this.userSvc.getUser().id || '',
+      owner: this.userSvc.getUser()._id || '',
       price: data.price,
       quantity: data.quantity,
       sizes: data.sizes,

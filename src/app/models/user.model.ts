@@ -1,11 +1,11 @@
 export interface User {
-  id?: string;
+  _id?: string;
   fullName: string;
   address: string;
   mobileNo: string;
   photoUrl: string;
   email: string;
-  password: string;
+  password?: string;
   userType: LOGIN_TYPE;
   createdOn: number;
   createdBy?: string;

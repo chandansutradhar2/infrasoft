@@ -85,8 +85,7 @@
         </div>
     </form>
     <div class="d-grid gap-2">
-        <button class="btn btn-primary" type="button" (click)="signup()">CREATE
-            ACCOUNT</button>
+        <spin-button [label]="'CREATE ACCOUNT'" [showLoader]="loading" (onClicked)="createAccount()"></spin-button>
         <button class="btn btn-link" type="button" (click)="navigate()">Already Have an account? Login</button>
     </div>
 

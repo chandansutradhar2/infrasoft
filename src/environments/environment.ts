@@ -6,6 +6,15 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000/',
   logo: '../assets/images/test-logo.png',
+  firebaseConfig: {
+    apiKey: 'AIzaSyBWD4DgrTV22s3DxZx8QxYJA1A5fdS4Ipk',
+    authDomain: 'e-com-5d1a8.firebaseapp.com',
+    projectId: 'e-com-5d1a8',
+    storageBucket: 'e-com-5d1a8.appspot.com',
+    messagingSenderId: '661410682589',
+    appId: '1:661410682589:web:6484cf8d49125d72fded34',
+    measurementId: 'G-1FDD35526N',
+  },
 };
 
 /*

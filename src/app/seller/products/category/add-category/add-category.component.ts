@@ -47,7 +47,7 @@ export class AddCategoryComponent implements OnInit {
 
     this.loading = true;
     let category: Category = {
-      createdBy: this.userSvc.getUser().id || '',
+      createdBy: this.userSvc.getUser()._id || '',
       description: this.formGrp.controls['description'].value,
       name: this.formGrp.controls['name'].value,
       imageUrl: '',

@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { NavMenu } from './models/menu.model';
 import { LOGIN_TYPE, User } from './models/user.model';
@@ -40,18 +41,29 @@ export class AppComponent {
     { url: 'about', name: 'About', icon: '' },
     { url: 'contact', name: 'Contact', icon: '' },
   ];
-  constructor(private userSvc: UserService, private router: Router) {
+  constructor(
+    private userSvc: UserService,
+    private router: Router,
+    private aFauth: AngularFireAuth
+  ) {
     let tmp = localStorage.getItem('user');
 
     if (tmp) {
       this.user = JSON.parse(tmp);
-      this.userSvc.setUser(this.user);
     }
 
-    this.userSvc.onUserChange.subscribe((user) => {
-      this.user = user;
-      //this.userSvc.setUser(this.user);
-      this.setNavBar();
+    // this.userSvc.onUserChange.subscribe((user) => {
+    //   this.user = user;
+    //   //this.userSvc.setUser(this.user);
+    //   this.setNavBar();
+    // });
+
+    this.aFauth.onAuthStateChanged((usr) => {
+      if (usr) {
+        this.userSvc.setUser(this.user);
+      } else {
+        localStorage.removeItem('user');
+      }
     });
 
     this.setNavBar();

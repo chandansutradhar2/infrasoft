@@ -5,20 +5,18 @@ import { Router } from '@angular/router';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { AsyncEmailValidator } from 'src/app/email-validator.service';
 import { LOGIN_TYPE, User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/user.service';
+import { AuthService } from '../auth.service';
 
 //decorator -metadata
 @Component({
   selector: 'cn-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
-  // styles: [
-  //   `
-  //     background-color: red;exit
-  //   `,
-  // ],
 })
 export class SignupComponent {
   formGrp: FormGroup;
+  loading: boolean = false;
   msg: string = '';
   strength!: string;
   fullName: string = 'Chandan';
@@ -29,16 +27,14 @@ export class SignupComponent {
   success: boolean = false;
   failure: boolean = false;
   constructor(
+    private authSvc: AuthService,
     private httpClient: HttpClient,
     private router: Router,
-    private asyncValidator: AsyncEmailValidator
+    private asyncValidator: AsyncEmailValidator,
+    private userSvc: UserService
   ) {
     this.formGrp = new FormGroup({
-      email: new FormControl(
-        '',
-        [Validators.required, Validators.email],
-        [asyncValidator.validate]
-      ),
+      email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
@@ -93,7 +89,7 @@ export class SignupComponent {
       password: data.password,
       photoUrl: '',
       userType: this.userType,
-      id: data.email,
+      _id: data.email,
       createdOn: Date.now(),
       createdBy: data.email,
     };
@@ -114,6 +110,68 @@ export class SignupComponent {
     );
   }
 
+  createAccount() {
+    console.log(this.formGrp.value, this.userType);
+
+    if (this.formGrp.invalid) {
+      this.msg = 'please resolve all error in the form and retry again';
+      this.failure = true;
+      return;
+    }
+
+    this.loading = true;
+    let data = this.formGrp.value;
+    this.formGrp.disable();
+    let user: User = {
+      address: data.address,
+      email: data.email,
+      fullName: data.fullName,
+      mobileNo: data.mobileNo,
+      password: data.password,
+      photoUrl: '',
+      userType: LOGIN_TYPE.user,
+      createdOn: Date.now(),
+      createdBy: data.email,
+    };
+    //todo save to database
+
+    this.authSvc
+      .createAccount(user)
+      .then((res: any) => {
+        user._id = res.uid;
+        this.httpClient
+          .post('http://localhost:3000/user/signup', user)
+          .subscribe(
+            () => {
+              this.success = true;
+              this.failure = false;
+              this.msg = 'account created successfully';
+              localStorage.setItem('user', JSON.stringify(user));
+              this.userSvc.setUser(user);
+            },
+            (err) => {
+              this.failure = true;
+              this.success = false;
+              err.error.error.code == 11000
+                ? (this.msg = 'email id already exists. please login')
+                : (this.msg = 'server error encountered');
+            }
+          );
+      })
+      .finally(() => {
+        this.formGrp.enable();
+        this.loading = false;
+      })
+      .catch((err) => {
+        if (err.code == 'auth/email-already-in-use') {
+          this.msg = 'Email Already exists. Please login';
+        } else {
+          this.msg = err.message;
+        }
+        this.failure = true;
+        this.success = false;
+      });
+  }
   close() {
     this.failure = false;
     this.success = false;

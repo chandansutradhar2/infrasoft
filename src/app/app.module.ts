@@ -15,12 +15,19 @@ import { BlogComponent } from './blog/blog.component';
 import { FeaturesComponent } from './features/features.component';
 import { ShopComponent } from './shop/shop.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { NgHttpLoaderModule } from 'ng-http-loader';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CartComponent } from './shop/cart/cart.component';
 import { ProductComponent } from './product/product.component';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+// localization modules
+import { NgHttpLoaderModule } from 'ng-http-loader';
+
+//datatable module
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
+//angular fire module
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -43,7 +50,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     AppRoutingModule,
     HttpClientModule,
     NgxDatatableModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     NgHttpLoaderModule.forRoot(),
+    AngularFireAuthModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

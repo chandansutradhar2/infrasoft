@@ -56,9 +56,9 @@ export class AddComponent implements OnInit {
       businessName: data.businessName,
       photoUrl: '',
       userType: LOGIN_TYPE.seller,
-      id: data.email,
+      _id: data.email,
       createdOn: Date.now(),
-      createdBy: this.userSvc.getUser().id,
+      createdBy: this.userSvc.getUser()._id,
     };
     this.sellerSvc
       .insertSeller(seller)
